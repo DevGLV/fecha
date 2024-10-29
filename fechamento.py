@@ -66,9 +66,9 @@ if uploaded_file is not None:
 
     # Exibir análise geral
     if variacao_percentual_geral > 0:
-        st.write(f"No geral, tivemos um aumento de *{variacao_percentual_geral:.2f}%* nas reclamações ao comparar *{mes_anterior.capitalize()}* com *{mes_atual.capitalize()}*.")
+        st.write(f"No geral, tivemos um aumento de **{variacao_percentual_geral:.2f}%** nas reclamações ao comparar **{mes_anterior.capitalize()}** com **{mes_atual.capitalize()}**.")
     else:
-        st.write(f"No geral, tivemos uma redução de *{-variacao_percentual_geral:.2f}%* nas reclamações ao comparar *{mes_anterior.capitalize()}* com *{mes_atual.capitalize()}*.")
+        st.write(f"No geral, tivemos uma redução de **{-variacao_percentual_geral:.2f}%** nas reclamações ao comparar **{mes_anterior.capitalize()}** com **{mes_atual.capitalize()}**.")
 
     # Análise por Diretoria
     diretorias = df['Diretoria'].unique()
@@ -93,7 +93,7 @@ if uploaded_file is not None:
         # Cálculo de representatividade da diretoria
         porcentagem_diretoria = (total_acumulado_diretoria / total_acumulado_geral) * 100 if total_acumulado_geral != 0 else 0
         
-        st.write(f"Neste ano, até *{mes_atual.capitalize()}, a Diretoria {diretoria} representa *{porcentagem_diretoria:.2f}%** do total de reclamações acumuladas. Isso nos dá uma ideia clara do impacto dessa diretoria no cenário geral.")
+        st.write(f"Neste ano, até **{mes_atual.capitalize()}**, a Diretoria {diretoria} representa **{porcentagem_diretoria:.2f}%** do total de reclamações acumuladas. Isso nos dá uma ideia clara do impacto dessa diretoria no cenário geral.")
 
         # Total de reclamações no mês atual e anterior
         total_atual = df_atual[df_atual['Diretoria'] == diretoria].shape[0]
@@ -107,9 +107,9 @@ if uploaded_file is not None:
         mes_anterior_nome = mes_anterior.capitalize()
 
         if variacao_percentual > 0:
-            st.write(f"\nNo mês de *{mes_atual_nome}, observamos um aumento de *{variacao_percentual:.2f}%* nas reclamações, passando de *{total_anterior}* em *{mes_anterior_nome}* para *{total_atual}* em *{mes_atual_nome}**. Isso indica uma piora na situação, que merece nossa atenção.")
+            st.write(f"\nNo mês de **{mes_atual_nome}**, observamos um aumento de **{variacao_percentual:.2f}%** nas reclamações, passando de **{total_anterior}** em **{mes_anterior_nome}** para **{total_atual}** em **{mes_atual_nome}**. Isso indica uma piora na situação, que merece nossa atenção.")
         else:
-            st.write(f"\nNo mês de *{mes_atual_nome}, celebramos uma queda de *{-variacao_percentual:.2f}%* nas reclamações, reduzindo de *{total_anterior}* em *{mes_anterior_nome}* para *{total_atual}* em *{mes_atual_nome}**. Isso é um sinal positivo e indica que estamos avançando na resolução dos problemas.")
+            st.write(f"\nNo mês de **{mes_atual_nome}**, observamos uma queda de **{-variacao_percentual:.2f}%** nas reclamações, reduzindo de **{total_anterior}** em **{mes_anterior_nome}** para **{total_atual}** em **{mes_atual_nome}**. Isso é um sinal positivo e indica que estamos avançando na resolução dos problemas.")
 
         # Comparar as naturezas entre os dois meses
         naturezas_atual = df_atual[df_atual['Diretoria'] == diretoria]['Natureza'].value_counts()
@@ -133,11 +133,11 @@ if uploaded_file is not None:
             variacao_percentual_natureza = (variacao_natureza / total_natureza_anterior) * 100 if total_natureza_anterior != 0 else 0
             
             if variacao_natureza > 0:
-                st.write(f"\nA natureza *'{index}'* apresentou uma piora significativa, com um aumento de *{variacao_percentual_natureza:.2f}%, passando de *{total_natureza_anterior}* para *{total_natureza_atual}**.")
+                st.write(f"\nA natureza **'{index}'** apresentou uma piora significativa, com um aumento de **{variacao_percentual_natureza:.2f}%**, passando de **{total_natureza_anterior}** para **{total_natureza_atual}**.")
             elif variacao_natureza < 0:
-                st.write(f"\nA natureza *'{index}'* melhorou consideravelmente, com uma diminuição de *{-variacao_percentual_natureza:.2f}%, reduzindo de *{total_natureza_anterior}* para *{total_natureza_atual}**.")
+                st.write(f"\nA natureza **'{index}'** melhorou consideravelmente, com uma diminuição de **{-variacao_percentual_natureza:.2f}%**, reduzindo de **{total_natureza_anterior}** para **{total_natureza_atual}**.")
             else:  # Quando não há variação (empate)
-                st.write(f"\nA natureza *'{index}'* não teve variação, mantendo-se em *{total_natureza_anterior}*.")
+                st.write(f"\nA natureza **'{index}'** não teve variação, mantendo-se em **{total_natureza_anterior}**.")
 
             # Identificar os motivos dentro da natureza
             motivos_atual = df_atual[(df_atual['Natureza'] == index) & (df_atual['Diretoria'] == diretoria)]['Motivo'].value_counts()
@@ -151,15 +151,15 @@ if uploaded_file is not None:
             df_motivos = df_motivos.sort_values(by='Variação', ascending=False, key=abs)
 
             # Exibir os 3 principais motivos com maior variação
-            st.write(f"\nMotivos relacionados à natureza *'{index}'*:")
+            st.write(f"\nMotivos relacionados à natureza **'{index}'**:")
             for motivo_index, motivo_row in df_motivos.head(3).iterrows():
                 total_motivo_atual = motivo_row['Atual']
                 total_motivo_anterior = motivo_row['Anterior']
                 variacao_motivo = motivo_row['Variação']
                 
                 if variacao_motivo > 0:
-                    st.write(f"- O motivo '{motivo_index}' piorou, aumentando de *{total_motivo_anterior}* para *{total_motivo_atual}*.")
+                    st.write(f"- O motivo '{motivo_index}' piorou, aumentando de **{total_motivo_anterior}** para **{total_motivo_atual}**.")
                 elif variacao_motivo < 0:
-                    st.write(f"- O motivo '{motivo_index}' melhorou, reduzindo de *{total_motivo_anterior}* para *{total_motivo_atual}*.")
+                    st.write(f"- O motivo '{motivo_index}' melhorou, reduzindo de **{total_motivo_anterior}** para **{total_motivo_atual}**.")
                 else:  # Quando não há variação (empate)
-                    st.write(f"- O motivo '{motivo_index}' não teve variação, mantendo-se em *{total_motivo_anterior}*.")
+                    st.write(f"- O motivo '{motivo_index}' não teve variação, mantendo-se em **{total_motivo_anterior}**.")
